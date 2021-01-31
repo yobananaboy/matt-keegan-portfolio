@@ -1,15 +1,18 @@
-function Post({ date, image, title }) {
+import Link from 'next/link'
+
+function Post({ date, image, title, slug }) {
   let { file, description } = image
 
   return (
     <div className="post">
       <img alt={description} src={`https:${file.url}`} />
-      <div className="description">{description}</div>
+      <Link as={`/post/${slug}`} href="/post/[slug]">
       <div className="text">
         <h2>{title}</h2>
         <h3>{date.substring(0, 10)}</h3>
       </div>
-
+      </Link>
+      <div className="description">{description}</div>
       <style jsx>{`
         .post {
           position: relative;

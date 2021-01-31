@@ -4,13 +4,13 @@ import { fetchEntries } from '@utils/contentfulPosts'
 
 import Header from '@components/Header'
 import Footer from '@components/Footer'
-import Post from '@components/Post'
+import PostPreview from '@components/PostPreview'
 
 export default function Home({ posts }) {
   return (
     <div className="container">
       <Head>
-        <title>Next + Contentful Starter</title>
+        <title>Matt Keegan</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -18,7 +18,7 @@ export default function Home({ posts }) {
         <Header />
         <div className="posts">
           {posts.map((p) => {
-            return <Post key={p.date} date={p.date} image={p.image.fields} title={p.title} />
+            return <PostPreview key={p.date} date={p.date} image={p.image.fields} title={p.title} slug={p.slug} />
           })}
         </div>
       </main>
