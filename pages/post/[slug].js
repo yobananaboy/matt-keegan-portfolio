@@ -47,6 +47,5 @@ export default function Post({ post, morePosts, preview }) {
     const allPosts = await getAllPostsWithSlug()
     return {
       paths: allPosts?.map(({ slug }) => `/post/${slug}`) ?? [],
-      fallback: true,
     }
   }
