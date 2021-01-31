@@ -1,67 +1,41 @@
 import Head from 'next/head'
-
 import { fetchEntries } from '@utils/contentfulPosts'
-
-import Header from '@components/Header'
+import { Container, Grid } from 'semantic-ui-react'
+import SiteHeader from '@components/SiteHeader'
 import Footer from '@components/Footer'
 import PostPreview from '@components/PostPreview'
+import { useWindowSize } from '../utils/getWindowSize' 
 
 export default function Home({ posts }) {
+
+  const size = useWindowSize();
+
   return (
-    <div className="container">
+    <>
       <Head>
         <title>Matt Keegan</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main>
-        <Header />
-        <div className="posts">
-          {posts.map((p) => {
-            return <PostPreview key={p.date} date={p.date} image={p.image.fields} title={p.title} slug={p.slug} />
-          })}
-        </div>
+        <SiteHeader />
+        <Container>
+          <Grid>
+            <Grid.Row columns={size.width > 800 ? 3 : 1}>
+              {posts.map((p) => {
+                return (
+                  <Grid.Column>
+                    <PostPreview key={p.date} date={p.date} image={p.image.fields} title={p.title} slug={p.slug} />
+                  </Grid.Column>
+                )
+              })}
+            </Grid.Row>
+          </Grid> 
+        </Container>      
       </main>
 
       <Footer />
-
-      <style jsx>{`
-        .container {
-          height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .posts {
-          display: flex;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+    </>
   )
 }
 

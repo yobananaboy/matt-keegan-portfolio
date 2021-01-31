@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import Header from '../../components/Header'
+import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '../../utils/contentfulPosts'
 import PostBody from '../../components/PostBody';
@@ -21,7 +21,7 @@ export default function Post({ post, morePosts, preview }) {
             <Head>
               <title>{post.title}</title>
             </Head>
-            <Header />
+            <SiteHeader />
             <PostBody title={post.title} image={post.image} />
             {console.log(morePosts)}
             <Footer />

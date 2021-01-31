@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.container {
+  margin-bottom: 2em;
+}
+
+@import 'components/PostPreview';
+@import 'setup/typography';

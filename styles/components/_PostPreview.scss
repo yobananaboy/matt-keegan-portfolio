@@ -1,0 +1,9 @@
+.preview-image {
+    max-height: 75vh;
+}
+
+.link-container {
+    & > h2, & > h3 {
+        cursor: pointer;
+    }
+}
