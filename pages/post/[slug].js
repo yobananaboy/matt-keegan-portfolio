@@ -22,7 +22,7 @@ export default function Post({ post, morePosts, preview }) {
               <title>{post.title}</title>
             </Head>
             <SiteHeader />
-            <PostBody title={post.title} image={post.image} />
+            <PostBody title={post.title} image={post.image} body={post.body} />
             {console.log(morePosts)}
             <Footer />
           </>

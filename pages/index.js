@@ -22,10 +22,17 @@ export default function Home({ posts }) {
         <Container>
           <Grid>
             <Grid.Row columns={size.width > 800 ? 3 : 1}>
-              {posts.map((p) => {
+              {posts.map((p, i) => {
                 return (
-                  <Grid.Column>
-                    <PostPreview key={p.date} date={p.date} image={p.image.fields} title={p.title} slug={p.slug} />
+                  <Grid.Column key={`homepage-column-${i}`}>
+                    <PostPreview
+                      key={p.date}
+                      date={p.date}
+                      image={p.image.fields}
+                      title={p.title}
+                      slug={p.slug}
+                      description={p.description}
+                    />
                   </Grid.Column>
                 )
               })}

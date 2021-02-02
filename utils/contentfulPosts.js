@@ -27,7 +27,7 @@ function parsePost({ fields }) {
     date: fields.date,
     body: fields.body,
     image: fields.image.fields,
-    //author: parseAuthor(fields.author),
+    description: fields.description,
   }
 }
 

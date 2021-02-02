@@ -1,0 +1,12 @@
+#post {
+    .post-header {
+        &__image {
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+    
+    .body-image {
+        margin-bottom: 1em;
+    }
+}
