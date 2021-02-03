@@ -7,7 +7,7 @@ import PostPreview from '@components/PostPreview'
 import { getSiteInfoById } from '../utils/contentfulPosts'
 import { useWindowSize } from '../utils/getWindowSize' 
 
-export default function Home({ posts, info }) {
+export default function Home({ preview, posts, info }) {
 
   const size = useWindowSize();
 
@@ -20,6 +20,7 @@ export default function Home({ posts, info }) {
 
       <main>
         <SiteHeader info={info} />
+        {console.log(preview)}
         <Container>
           <Grid>
             <Grid.Row columns={size.width > 800 ? 3 : 1}>
@@ -47,7 +48,7 @@ export default function Home({ posts, info }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params, preview = false}) {
   const res = await fetchEntries("post")
   const posts = await res.map((p) => {
     return p.fields
@@ -56,6 +57,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      preview,
       posts,
       info: infoData,
     },
