@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import SiteHeader from '../components/SiteHeader'
 import { Container, Header } from 'semantic-ui-react'
-import { getSiteInfoById } from '../../utils/contentfulPosts'
+import { getSiteInfoById } from '../utils/contentfulPosts'
 
 
 export default function Custom404({ info }) {
