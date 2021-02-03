@@ -11,7 +11,7 @@ export default function Custom404({ info }) {
         <Head>
             <title>Whoops! | Matt Keegan</title>
         </Head>
-        <SiteHeader />
+        <SiteHeader info={info} />
         <Container text>
             <Header as="h3">Whoops! Something went wrong...</Header>
             <Link href="/"><p>Go back home</p></Link>
