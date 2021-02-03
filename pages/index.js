@@ -4,9 +4,10 @@ import { Container, Grid } from 'semantic-ui-react'
 import SiteHeader from '@components/SiteHeader'
 import Footer from '@components/Footer'
 import PostPreview from '@components/PostPreview'
+import { getSiteInfoById } from '../utils/contentfulPosts'
 import { useWindowSize } from '../utils/getWindowSize' 
 
-export default function Home({ posts }) {
+export default function Home({ posts, info }) {
 
   const size = useWindowSize();
 
@@ -18,7 +19,7 @@ export default function Home({ posts }) {
       </Head>
 
       <main>
-        <SiteHeader />
+        <SiteHeader info={info} />
         <Container>
           <Grid>
             <Grid.Row columns={size.width > 800 ? 3 : 1}>
@@ -47,14 +48,16 @@ export default function Home({ posts }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetchEntries()
+  const res = await fetchEntries("post")
   const posts = await res.map((p) => {
     return p.fields
   })
+  const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID)
 
   return {
     props: {
       posts,
+      info: infoData,
     },
   }
 }

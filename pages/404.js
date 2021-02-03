@@ -1,9 +1,11 @@
-import Head from 'next/head';
-import Link from 'next/link';
-import SiteHeader from '../components/SiteHeader';
-import { Container, Header } from 'semantic-ui-react';
+import Head from 'next/head'
+import Link from 'next/link'
+import SiteHeader from '../components/SiteHeader'
+import { Container, Header } from 'semantic-ui-react'
+import { getSiteInfoById } from '../../utils/contentfulPosts'
 
-export default function Custom404() {
+
+export default function Custom404({ info }) {
     return(
     <>
         <Head>
@@ -17,3 +19,13 @@ export default function Custom404() {
     </>
     )
 }
+
+export async function getStaticProps() {
+    const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID)
+    
+    return {
+      props: {
+        info: infoData,
+      },
+    }
+  }

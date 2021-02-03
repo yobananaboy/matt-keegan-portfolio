@@ -1,20 +1,6 @@
 const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID
 const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN
 
-const POST_GRAPHQL_FIELDS = `
-id
-slug
-title
-image {
-  url
-}
-alt
-body {
-  json
-}
-date`
-
-
 const client = require('contentful').createClient({
   space: space,
   accessToken: accessToken,
@@ -31,12 +17,21 @@ function parsePost({ fields }) {
   }
 }
 
+function parseIntro({ fields }) {
+  return {
+    title: fields.title,
+    intro: fields.intro,
+  }
+}
+
 function parsePostEntries(entries, cb = parsePost) {
   return entries?.items?.map(cb)
 }
 
-export async function fetchEntries() {
-  const entries = await client.getEntries()
+export async function fetchEntries(content_type) {
+  const entries = await client.getEntries({
+    content_type
+  })
   if (entries.items) return entries.items
   console.log(`Error getting Entries for ${contentType.name}.`)
 }
@@ -69,4 +64,9 @@ export async function getPostAndMorePosts(slug, preview) {
   }
 }
 
-export default { fetchEntries, getAllPostsWithSlug, getPostAndMorePosts }
+export async function getSiteInfoById(id) {
+  const entry = await client.getEntry(id)
+  return parseIntro(entry);
+}
+
+export default { fetchEntries, getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById }
