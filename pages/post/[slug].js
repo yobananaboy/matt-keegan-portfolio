@@ -19,7 +19,7 @@ export default function Post({ post, morePosts, info, preview }) {
         ) : (
           <>
             <Head>
-              <title>{post.title}</title>
+              <title>{post.title} | Matt Keegan</title>
             </Head>
             <SiteHeader info={info} />
             <PostBody title={post.title} image={post.image} body={post.body} />
@@ -32,8 +32,9 @@ export default function Post({ post, morePosts, info, preview }) {
 };
 
   export async function getStaticProps({ params, preview = false }) {
+
     const data = await getPostAndMorePosts(params.slug, preview)
-    const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID)
+    const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID, preview)
 
     return {
       props: {
