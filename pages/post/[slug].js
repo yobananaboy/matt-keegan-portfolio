@@ -38,7 +38,7 @@ export default function Post({ post, morePosts, info, preview }) {
 
     return {
       props: {
-        preview: context.preview,
+        preview,
         info: infoData,
         post: data?.post ?? null,
         morePosts: data?.morePosts ?? null,
