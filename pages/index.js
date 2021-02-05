@@ -47,7 +47,7 @@ export default function Home({ posts, info }) {
   )
 }
 
-export async function getStaticProps({preview}) {
+export async function getStaticProps({preview = false}) {
 
   const res = await fetchEntries("post", preview)
   const posts = await res.map((p) => {
