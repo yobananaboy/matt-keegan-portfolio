@@ -9,7 +9,7 @@ export default async function handler (req, res) {
   
     // Fetch the headless CMS to check if the provided `slug` exists
     // getPostBySlug would implement the required fetching logic to the headless CMS
-    const post = await getAllPostsWithSlug(req.query.slug)
+    let post = await getAllPostsWithSlug(req.query.slug)
   
     // If the slug doesn't exist prevent preview mode from being enabled
     if (!post) {
