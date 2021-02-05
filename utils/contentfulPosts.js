@@ -1,10 +1,16 @@
 const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID
 const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN
 
-const client = require('contentful').createClient({
-  space: space,
-  accessToken: accessToken,
-})
+function getClient (preview = false) {
+  if(preview) accessToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
+
+  const client = require('contentful').createClient({
+    space: space,
+    accessToken: accessToken,
+  })
+
+  return client
+}
 
 function parsePost({ fields }) {
   return {
@@ -28,7 +34,9 @@ function parsePostEntries(entries, cb = parsePost) {
   return entries?.items?.map(cb)
 }
 
-export async function fetchEntries(content_type) {
+export async function fetchEntries(content_type, preview = false) {
+  const client = getClient(preview)
+
   const entries = await client.getEntries({
     content_type
   })
@@ -36,7 +44,9 @@ export async function fetchEntries(content_type) {
   console.log(`Error getting Entries for ${contentType.name}.`)
 }
 
-export async function getAllPostsWithSlug() {
+export async function getAllPostsWithSlug(preview = false) {
+  const client = getClient(preview)
+
   const entries = await client.getEntries({
     content_type: 'post',
     select: 'fields.slug',
@@ -45,7 +55,9 @@ export async function getAllPostsWithSlug() {
   return parsePostEntries(entries, (post) => post.fields)
 }
 
-export async function getPostAndMorePosts(slug, preview) {
+export async function getPostAndMorePosts(slug, preview = false) {
+  const client = getClient(preview)
+  
   const entry = await client.getEntries({
     content_type: 'post',
     limit: 1,
@@ -64,7 +76,9 @@ export async function getPostAndMorePosts(slug, preview) {
   }
 }
 
-export async function getSiteInfoById(id) {
+export async function getSiteInfoById(id, preview = false) {
+  const client = getClient(preview)
+  
   const entry = await client.getEntry(id)
   return parseIntro(entry);
 }

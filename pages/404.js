@@ -20,8 +20,9 @@ export default function Custom404({ info }) {
     )
 }
 
-export async function getStaticProps() {
-    const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID)
+export async function getStaticProps({ preview }) {
+
+    const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID, preview)
     
     return {
       props: {

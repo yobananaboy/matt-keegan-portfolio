@@ -47,12 +47,13 @@ export default function Home({ posts, info }) {
   )
 }
 
-export async function getStaticProps() {
-  const res = await fetchEntries("post")
+export async function getStaticProps({preview}) {
+
+  const res = await fetchEntries("post", preview)
   const posts = await res.map((p) => {
     return p.fields
   })
-  const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID)
+  const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID, preview)
 
   return {
     props: {
