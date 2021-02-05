@@ -12,7 +12,6 @@
     "@contentful/rich-text-react-renderer": "^14.1.2",
     "@contentful/rich-text-types": "^14.1.2",
     "contentful": "^7.14.6",
-    "netlify-plugin-cache-nextjs": "^1.5.2",
     "next": "^10.0.6",
     "react": "^17.0.1",
     "react-dom": "16.13.1",
