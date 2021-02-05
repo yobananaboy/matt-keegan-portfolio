@@ -1,12 +1,12 @@
-const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID
-const accessToken = process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN
-
 function getClient (preview = false) {
-  if(preview) accessToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
+  const space = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID
+  const accessToken = preview ? process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN : process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN
+  const host = preview ? "preview.contentful.com" : "cdn.contentful.com"
 
   const client = require('contentful').createClient({
     space: space,
     accessToken: accessToken,
+    host
   })
 
   return client
@@ -83,4 +83,15 @@ export async function getSiteInfoById(id, preview = false) {
   return parseIntro(entry);
 }
 
-export default { fetchEntries, getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById }
+export async function getSinglePostWithSlug(slug, preview = false, content_type = "post") {
+  const client = getClient(preview)
+
+  const entry = await client.getEntries({
+    content_type,
+    'fields.slug[in]': slug
+  })
+  
+  return entry.items[0].fields
+}
+
+export default { fetchEntries, getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById, getSinglePostWithSlug }
