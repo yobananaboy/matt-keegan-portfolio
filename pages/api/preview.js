@@ -1,6 +1,8 @@
 import { getAllPostsWithSlug } from '../../utils/contentfulPosts'
 
-export default async (req, res) => {
+export default async function handler (req, res) {
+    console.log(req.query.secret)
+    console.log(req.query.slug)
     // Check the secret and next parameters
     // This secret should only be known to this API route and the CMS
     if (req.query.secret !== process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN || !req.query.slug) {
