@@ -28,6 +28,7 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                 >
                     <Form.Field
                         id='name'
+                        name='name'
                         control={Input}
                         label='Your name'
                         value={form.name}
@@ -36,6 +37,7 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                     />
                     <Form.Field
                         id='message'
+                        name='message'
                         value={form.message}
                         control={TextArea}
                         label='Your message'
@@ -44,6 +46,7 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                     />
                     <Form.Field
                         id='email'
+                        name='email'
                         value={form.email}
                         type='email'
                         control={Input}
