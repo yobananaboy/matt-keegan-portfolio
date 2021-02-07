@@ -23,7 +23,7 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                     name="contact"
                     method="POST"
                     netlify
-                    data-netlify={true}
+                    data-netlify="true"
                     netlify-honeypot="bot-field"
                     onSubmit={processForm}
                 >
