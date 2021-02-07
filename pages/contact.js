@@ -7,6 +7,12 @@ import { getSiteInfoById } from '../utils/contentfulPosts'
 
 export default function Contact({ info }) {
 
+    const encode = (data) => {
+        return Object.keys(data)
+            .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+            .join("&");
+    }
+
     const [submitState, updateSubmitState] = useState({
         success: false,
         error: false,
@@ -28,14 +34,10 @@ export default function Contact({ info }) {
 
     const processForm = event => {
         event.preventDefault()
-        const data = new FormData()
-        data.append("name", form.name)
-        data.append("message", form.message)
-        data.append("email", form.email)
         fetch('/', {
           method: 'POST',
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: data,
+          body: encode({ "form-name": "contact", ...form }),
         })
         .then(() => {
           updateSubmitState({
