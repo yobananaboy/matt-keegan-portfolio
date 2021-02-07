@@ -33,7 +33,6 @@ export default function Contact({ info }) {
     
 
     const processForm = event => {
-        event.preventDefault()
         fetch('/', {
           method: 'POST',
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -51,6 +50,8 @@ export default function Contact({ info }) {
               error: true,
           })
         })
+
+        event.preventDefault()
     }
       
 

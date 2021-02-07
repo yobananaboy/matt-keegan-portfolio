@@ -22,7 +22,6 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                     className="ui form email-form"
                     name="contact"
                     method="POST"
-                    netlify
                     data-netlify="true"
                     netlify-honeypot="bot-field"
                     onSubmit={processForm}
