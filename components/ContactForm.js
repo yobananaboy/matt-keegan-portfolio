@@ -18,8 +18,8 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                 </>
             }
             {!submitState.success && 
-                <Form
-                    className="email-form"
+                <form
+                    className="ui form email-form"
                     name="contact"
                     method="POST"
                     data-netlify="true"
@@ -52,7 +52,7 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                         required
                     />
                     <Button type='submit'>Submit</Button>
-                </Form>
+                </form>
             }
        </>
     )
