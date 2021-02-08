@@ -22,12 +22,13 @@ export default function Contact({ info }) {
         name: "",
         message: "",
         email: "",
+        "bot-field": "",
     })
 
     const handleChange = event => {
         updateForm({
             ...form,
-            [event.target.id]: event.target.value
+            [event.target.name]: event.target.value
         });
     }
     
