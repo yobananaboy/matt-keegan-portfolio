@@ -27,7 +27,7 @@ export default function ContactForm({ form, handleChange, processForm, submitSta
                     onSubmit={processForm}
                 >
                     <p className="hidden">
-                        <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+                        <label>Don’t fill this out if you’re human: <input onChange={handleChange} name="bot-field" /></label>
                     </p>
                     <Form.Field
                         id='name'
