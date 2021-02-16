@@ -46,8 +46,8 @@ export default function Post({ post, morePosts, info, preview }) {
     }
   }
   
-  export async function getStaticPaths() {
-    const allPosts = await getAllPostsWithSlug()
+  export async function getStaticPaths({preview = false}) {
+    const allPosts = await getAllPostsWithSlug({preview, content_type: "post"})
     return {
       paths: allPosts?.map(({ slug }) => `/post/${slug}`) ?? [],
       fallback: false,
