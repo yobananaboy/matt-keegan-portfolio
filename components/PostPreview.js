@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { Container, Image, Header } from 'semantic-ui-react'
+import { Container, Header } from 'semantic-ui-react'
+import ScaledImage from './ScaledImage'
 
 function Post({ date, image, title, description, slug }) {
-  let { file, alt } = image
 
   return (
     <Container className="post">
-      <Image alt={alt} src={`https:${file.url}`} className="preview-image" />
+      <ScaledImage image={image} className="preview-image" />
         <Container className="link-container">
           <Header as="h2">
             <Link href={`/post/${encodeURIComponent(slug)}`}>
