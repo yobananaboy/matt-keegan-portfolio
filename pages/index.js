@@ -5,7 +5,7 @@ import SiteHeader from '@components/SiteHeader'
 import Footer from '@components/Footer'
 import PostPreview from '@components/PostPreview'
 import { getSiteInfoById } from '../utils/contentfulPosts'
-import { useWindowSize } from '../utils/getWindowSize' 
+import { useWindowSize } from '../utils/useWindowSize' 
 
 export default function Home({ posts, info }) {
 

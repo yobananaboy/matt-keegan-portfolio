@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Container, Header, Image, Divider } from 'semantic-ui-react'
+import ScaledImage from './ScaledImage'
+import { Container, Header, Divider } from 'semantic-ui-react'
 import { BLOCKS, MARKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
@@ -13,8 +14,8 @@ export default function PostBody({ title, image, body }) {
       },
       renderNode: {
         [BLOCKS.EMBEDDED_ASSET]: (node) => {
-            let { file, alt } = node.data.target.fields;
-            return <Image className="body-image" src={file.url} alt={alt} />
+            let image = node.data.target.fields;
+            return <ScaledImage className="body-image" image={image} maxWidth={500} />
         }
       }
     }
@@ -24,7 +25,7 @@ export default function PostBody({ title, image, body }) {
     return (
         <Container id="post">
             <Header as="h1">{title}</Header>
-            <Image src={image.file.url} alt={image.file.description} className="post-header__image" />
+            <ScaledImage image={image} className="post-header__image" maxWidth={600} />
             <Divider horizontal />
             <Container>
                 {postBody}
