@@ -9,7 +9,7 @@ import { useWindowSize } from '../utils/useWindowSize'
 
 export default function Home({ posts, info }) {
 
-  const size = useWindowSize();
+  const size = useWindowSize()
 
   return (
     <>

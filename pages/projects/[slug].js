@@ -5,7 +5,7 @@ import Footer from '../../components/Footer'
 import { getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById } from '../../utils/contentfulPosts'
 import PostBody from '../../components/PostBody';
 
-export default function Post({ post, morePosts, info, preview }) {
+export default function Project({ post, morePosts, info, preview }) {
     const router = useRouter()
 
     if (!router.isFallback && !post) {
@@ -33,7 +33,7 @@ export default function Post({ post, morePosts, info, preview }) {
 
   export async function getStaticProps({ params, preview = false }) {
 
-    const data = await getPostAndMorePosts({slug: params.slug, preview})
+    const data = await getPostAndMorePosts({slug: params.slug, preview, type: 'portfolioItem'})
     const infoData = await getSiteInfoById(process.env.CONTENTFUL_SITE_INFO_ID, preview)
 
     return {
@@ -47,9 +47,10 @@ export default function Post({ post, morePosts, info, preview }) {
   }
   
   export async function getStaticPaths({preview = false}) {
-    const allPosts = await getAllPostsWithSlug({preview, type: "post"})
+    const allPosts = await getAllPostsWithSlug({preview, type: 'portfolioItem'})
+    console.log(allPosts)
     return {
-      paths: allPosts?.map(({ slug }) => `/post/${slug}`) ?? [],
+      paths: allPosts?.map(({ slug }) => `/projects/${slug}`) ?? [],
       fallback: false,
     }
   }

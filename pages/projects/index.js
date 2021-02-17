@@ -1,9 +1,13 @@
 import Head from 'next/head'
-import { Header, Container } from 'semantic-ui-react'
+import { Header, Container, Grid } from 'semantic-ui-react'
 import SiteHeader from '@components/SiteHeader'
+import ProjectPreview from '@components/ProjectPreview'
 import { fetchEntries, getSiteInfoById } from '../../utils/contentfulPosts'
+import { useWindowSize } from '../../utils/useWindowSize'
 
 export default function Projects({ info, projects }) {   
+
+    const size = useWindowSize()
 
     return(
         <>
@@ -12,11 +16,26 @@ export default function Projects({ info, projects }) {
             </Head>
             <SiteHeader info={info} />
             <Container>
-                <Header as="h2">Projects</Header>
-                <p>Here are a selection of projects I've made:</p>
-                {projects.map(p => {
-                    console.log(p.title)
-                })}
+              <Header as="h2">Projects</Header>
+              <p>Here are a selection of projects I've made:</p>
+              <Grid>
+                <Grid.Row columns={size.width > 800 ? 3 : 1}>
+                  {projects.map((p, i) => {
+                    return ( 
+                      <Grid.Column key={`project-index-column-${i}`}>
+                        <ProjectPreview
+                          key={p.title}
+                          image={p.image.fields}
+                          title={p.title}
+                          slug={p.slug}
+                          description={p.description}
+                          feaured={p.featured}
+                        />
+                      </Grid.Column>
+                    )
+                  })}
+                </Grid.Row>
+              </Grid>
             </Container>
         </>
     )

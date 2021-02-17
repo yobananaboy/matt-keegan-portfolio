@@ -14,12 +14,12 @@ function getClient (preview = false) {
 
 function parsePost({ fields }) {
   return {
-    title: fields.title,
-    slug: fields.slug,
-    date: fields.date,
-    body: fields.body,
-    image: fields.image.fields,
-    description: fields.description,
+    title: fields.title ? fields.title : null,
+    slug: fields.slug ? fields.slug : null,
+    date: fields.date ? fields.date : null,
+    body: fields.body ? fields.body : null,
+    image: fields.image.fields ? fields.image.fields : null,
+    description: fields.description ? fields.description : null,
   }
 }
 
@@ -44,27 +44,47 @@ export async function fetchEntries(content_type, preview = false) {
   console.log(`Error getting Entries for ${contentType.name}.`)
 }
 
-export async function getAllPostsWithSlug(preview = false) {
+export async function getAllPostsWithSlug({preview = false, type = "post"}) {
   const client = getClient(preview)
 
   const entries = await client.getEntries({
-    content_type: 'post',
+    content_type: type,
     select: 'fields.slug',
   })
-  console.log(entries);
   return parsePostEntries(entries, (post) => post.fields)
 }
 
-export async function getPostAndMorePosts(slug, preview = false) {
+export async function getPostAndMorePosts({slug, preview = false, type = "post"}) {
   const client = getClient(preview)
   
   const entry = await client.getEntries({
-    content_type: 'post',
+    content_type: type,
     limit: 1,
     'fields.slug[in]': slug,
   })
   const entries = await client.getEntries({
-    content_type: 'post',
+    content_type: type,
+    limit: 2,
+    order: type === 'post' ? '-fields.date' : '-fields.title',
+    'fields.slug[nin]': slug,
+  })
+
+  return {
+    post: parsePostEntries(entry)[0],
+    morePosts: parsePostEntries(entries),
+  }
+}
+
+export async function getProjectAndMoreProjects(slug, preview = false) {
+  const client = getClient(preview)
+  
+  const entry = await client.getEntries({
+    content_type: 'project',
+    limit: 1,
+    'fields.slug[in]': slug,
+  })
+  const entries = await client.getEntries({
+    content_type: 'project',
     limit: 2,
     order: '-fields.date',
     'fields.slug[nin]': slug,

@@ -4,7 +4,7 @@ import { Container, Header, Divider } from 'semantic-ui-react'
 import { BLOCKS, MARKS } from '@contentful/rich-text-types'
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-export default function PostBody({ title, image, description, body }) {
+export default function ProjectBody({ title, image, description, body }) {
 
     const Bold = ({ children }) => <strong>{children}</strong>;
     
@@ -25,6 +25,7 @@ export default function PostBody({ title, image, description, body }) {
     return (
         <Container id="post">
             <Header as="h1">{title}</Header>
+            <p>{description}</p>
             <ScaledImage image={image} className="post-header__image" maxWidth={600} />
             <Divider horizontal />
             <Container>
