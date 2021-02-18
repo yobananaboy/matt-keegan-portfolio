@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import Link from 'next/link'
+import { Container } from 'semantic-ui-react'
 import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import { getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById } from '../../utils/contentfulPosts'
 import PostBody from '../../components/PostBody';
 
-export default function Project({ post, morePosts, info, preview }) {
+export default function Project({ post, prevPost, nextPost, info, preview }) {
     const router = useRouter()
 
     if (!router.isFallback && !post) {
@@ -22,8 +24,21 @@ export default function Project({ post, morePosts, info, preview }) {
               <title>{post.title} | Matt Keegan</title>
             </Head>
             <SiteHeader info={info} />
-            <PostBody title={post.title} image={post.image} body={post.body} />
-            {console.log(morePosts)}
+            <Container>
+              <PostBody title={post.title} image={post.image} body={post.body} />
+              {nextPost && <p>{nextPost.title}</p>}
+              {prevPost && <p>{prevPost.title}</p>}
+              <Link href='/projects'>
+                <p>
+                  <a>View all projects</a>
+                </p>
+              </Link>
+              <Link href="/">
+                <p>
+                  <a>Back to home</a>
+                </p>
+              </Link>
+            </Container>
             <Footer />
           </>
         )}
@@ -41,14 +56,14 @@ export default function Project({ post, morePosts, info, preview }) {
         preview,
         info: infoData,
         post: data?.post ?? null,
-        morePosts: data?.morePosts ?? null,
+        nextPost: data?.nextPost ?? null,
+        prevPost: data?.prevPost ?? null,
       },
     }
   }
   
   export async function getStaticPaths({preview = false}) {
     const allPosts = await getAllPostsWithSlug({preview, type: 'portfolioItem'})
-    console.log(allPosts)
     return {
       paths: allPosts?.map(({ slug }) => `/projects/${slug}`) ?? [],
       fallback: false,

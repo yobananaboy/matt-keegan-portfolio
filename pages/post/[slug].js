@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { Container } from 'semantic-ui-react'
 import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import { getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById } from '../../utils/contentfulPosts'
 import PostBody from '../../components/PostBody';
 
-export default function Post({ post, morePosts, info, preview }) {
+export default function Post({ post, nextPost, prevPost, info, preview }) {
     const router = useRouter()
 
     if (!router.isFallback && !post) {
@@ -21,9 +22,16 @@ export default function Post({ post, morePosts, info, preview }) {
             <Head>
               <title>{post.title} | Matt Keegan</title>
             </Head>
-            <SiteHeader info={info} />
-            <PostBody title={post.title} image={post.image} body={post.body} />
-            {console.log(morePosts)}
+            <Container>
+              <SiteHeader info={info} />
+              <PostBody title={post.title} image={post.image} body={post.body} />
+              {console.log("NEXT POST")}
+              {console.log(nextPost)}
+              {nextPost && <p>{nextPost.title}</p>}
+              {console.log("PREV POST")}
+              {console.log(prevPost)}
+              {prevPost && <p>{prevPost.title}</p>}
+            </Container>
             <Footer />
           </>
         )}
@@ -41,7 +49,8 @@ export default function Post({ post, morePosts, info, preview }) {
         preview,
         info: infoData,
         post: data?.post ?? null,
-        morePosts: data?.morePosts ?? null,
+        nextPost: data?.nextPost ?? null,
+        prevPost: data?.prevPost ?? null,
       },
     }
   }

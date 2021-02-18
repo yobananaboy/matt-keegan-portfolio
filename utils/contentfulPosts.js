@@ -38,7 +38,8 @@ export async function fetchEntries(content_type, preview = false) {
   const client = getClient(preview)
 
   const entries = await client.getEntries({
-    content_type
+    content_type,
+    order: '-fields.date'
   })
   if (entries.items) return entries.items
   console.log(`Error getting Entries for ${contentType.name}.`)
@@ -50,49 +51,53 @@ export async function getAllPostsWithSlug({preview = false, type = "post"}) {
   const entries = await client.getEntries({
     content_type: type,
     select: 'fields.slug',
+    order: 'fields.date'
   })
   return parsePostEntries(entries, (post) => post.fields)
 }
 
 export async function getPostAndMorePosts({slug, preview = false, type = "post"}) {
   const client = getClient(preview)
-  
-  const entry = await client.getEntries({
-    content_type: type,
-    limit: 1,
-    'fields.slug[in]': slug,
-  })
-  const entries = await client.getEntries({
-    content_type: type,
-    limit: 2,
-    order: type === 'post' ? '-fields.date' : '-fields.title',
-    'fields.slug[nin]': slug,
-  })
 
-  return {
-    post: parsePostEntries(entry)[0],
-    morePosts: parsePostEntries(entries),
+  // get the entry based on its slug
+  const entry = await client.getEntries({
+      content_type: type,
+      limit: 1,
+      'fields.slug[in]': slug,
+    })
+
+  // then we try and get the previous and next posts
+  let prevPost
+  let nextPost
+
+  try {
+    prevPost = await client.getEntries({
+      content_type: type,
+      order: '-fields.date',
+      'fields.date[lt]': entry.items[0].fields.date,
+      limit: 1,
+    })
+  } catch(e) {
+    // if its the first post there wont be any previous posts
+    prevPost = null
   }
-}
-
-export async function getProjectAndMoreProjects(slug, preview = false) {
-  const client = getClient(preview)
   
-  const entry = await client.getEntries({
-    content_type: 'project',
-    limit: 1,
-    'fields.slug[in]': slug,
-  })
-  const entries = await client.getEntries({
-    content_type: 'project',
-    limit: 2,
-    order: '-fields.date',
-    'fields.slug[nin]': slug,
-  })
-
+  try {
+    nextPost = await client.getEntries({
+      content_type: type,
+      order: 'fields.date',
+      'fields.date[gt]': entry.items[0].fields.date,
+      limit: 1,
+    })
+  } catch(e) {
+    // if its last there wont be any next posts
+    nextPost = null
+  }
+  
   return {
     post: parsePostEntries(entry)[0],
-    morePosts: parsePostEntries(entries),
+    prevPost: prevPost.total >= 1 ? parsePostEntries(prevPost)[0] : null,
+    nextPost: nextPost.total >= 1 ? parsePostEntries(nextPost)[0] : null,
   }
 }
 
