@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { Container } from 'semantic-ui-react'
+import { Container, Divider } from 'semantic-ui-react'
 import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import { getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById } from '../../utils/contentfulPosts'
 import PostBody from '../../components/PostBody';
+import NextPrevPost from '../../components/NextPrevPost';
 
 export default function Post({ post, nextPost, prevPost, info, preview }) {
     const router = useRouter()
@@ -25,12 +26,13 @@ export default function Post({ post, nextPost, prevPost, info, preview }) {
             <Container>
               <SiteHeader info={info} />
               <PostBody title={post.title} image={post.image} body={post.body} />
-              {console.log("NEXT POST")}
-              {console.log(nextPost)}
-              {nextPost && <p>{nextPost.title}</p>}
-              {console.log("PREV POST")}
-              {console.log(prevPost)}
-              {prevPost && <p>{prevPost.title}</p>}
+              <NextPrevPost
+                nextPost={nextPost}
+                prevPost={prevPost}
+                itemType={'post'}
+                slugRoot={'post'}
+              />
+              <Divider horizontal />
             </Container>
             <Footer />
           </>

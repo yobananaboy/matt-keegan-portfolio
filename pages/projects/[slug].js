@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import Link from 'next/link'
-import { Container } from 'semantic-ui-react'
+import { Container , Divider} from 'semantic-ui-react'
 import SiteHeader from '../../components/SiteHeader'
 import Footer from '../../components/Footer'
 import { getAllPostsWithSlug, getPostAndMorePosts, getSiteInfoById } from '../../utils/contentfulPosts'
 import PostBody from '../../components/PostBody';
+import NextPrevPost from '../../components/NextPrevPost';
 
 export default function Project({ post, prevPost, nextPost, info, preview }) {
     const router = useRouter()
@@ -26,14 +27,19 @@ export default function Project({ post, prevPost, nextPost, info, preview }) {
             <SiteHeader info={info} />
             <Container>
               <PostBody title={post.title} image={post.image} body={post.body} />
-              {nextPost && <p>{nextPost.title}</p>}
-              {prevPost && <p>{prevPost.title}</p>}
+              <NextPrevPost
+                nextPost={nextPost}
+                prevPost={prevPost}
+                itemType={'project'}
+                slugRoot={'projects'}
+              />
+              <Divider horizontal />
               <Link href='/projects'>
                 <p>
                   <a>View all projects</a>
                 </p>
               </Link>
-              <Link href="/">
+              <Link href='/'>
                 <p>
                   <a>Back to home</a>
                 </p>
