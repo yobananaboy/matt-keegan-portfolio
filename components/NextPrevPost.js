@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Grid } from 'semantic-ui-react';
 
-export default function Footer({ nextPost, prevPost, itemType, slugRoot }) {
+export default function NextPrevPost({ nextPost, prevPost, itemType, slugRoot }) {
   return (
     <Grid>
       <Grid.Row columns={2}>
